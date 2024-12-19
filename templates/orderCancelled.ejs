@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Cancelled</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="background-color: #ffdddd; color: #b20000; padding: 10px; border-radius: 5px; text-align: center;">
+                Order Cancelled
+            </h1>        </div>
+        <p>Dear <%= userName %>,</p>
+        <p>We regret to inform you that your order has been cancelled by the provider.</p>
+        <p>If you have any questions or need assistance, please feel free to contact our support team.</p>
+        <p>Thank you for understanding.</p>
+        <p>Best regards,</p>
+        <p>The ON YOUR SERVICE Team</p>
+        <div class="footer">
+            <p>&copy; <%= new Date().getFullYear() %> On Your Service. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
