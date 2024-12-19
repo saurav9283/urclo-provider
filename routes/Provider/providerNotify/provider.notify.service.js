@@ -4,9 +4,9 @@ const { appointmentSchedule, serviceStarted, serviceEnded } = require('../../../
 
 
 module.exports = {
-    // providerNotifyService : async (user_id,providerId,schedule_time ) => {
 
     providerNotifyService: async (user_id, providerId, schedule_time) => {
+        // console.log('user_id, providerId, schedule_time: ', user_id, providerId, schedule_time);
         // console.log('providerId,user_id: ', providerId,user_id);
         const currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
         const providerSMS = appointmentSchedule.schedule.replace('[Date and Time]', schedule_time);
@@ -20,14 +20,16 @@ module.exports = {
                 type: appointmentSchedule.type,
                 createdon: currentDateTime,
             };
+            // console.log('payload:=-=- ', payload);
 
             const query = process.env.INSERT_PROVIDER_SMS
-                .replace('<provider_id>', payload.providerId)
-                .replace('<user_id>', payload.user_id)
-                .replace('<content>', payload.content)
-                .replace('<code>', payload.code)
-                .replace('<type>', payload.type)
-                .replace('<createdon>', payload.createdon);
+            .replace('<provider_id>', payload.providerId)
+            .replace('<user_id>', payload.user_id)
+            .replace('<content>', payload.content)
+            .replace('<code>', payload.code)
+            .replace('<type>', payload.type)
+            .replace('<createdon>', payload.createdon);
+            // console.log('query: ', query);
 
             await new Promise((resolve, reject) => {
                 pool.query(query, (error, results) => {
