@@ -5,6 +5,7 @@ const { sendEmail } = require("../../../services/email-service.js");
 const jwt = require('jsonwebtoken');
 // const { notificationService, updateOnOrderNotificationService } = require("../../User/userNotification/user.notification.service.js");
 const extendAvailableTime = require("../../../lib/extendAvailableTime.js");
+const {publishToQueue} = require("../../../utils/RabbitMQ .js");
 
 module.exports = {
     ProviderOdditLocationService: (city, sub_cat_id, callback) => {
@@ -391,8 +392,10 @@ module.exports = {
                             };
                             try {
                                 await sendEmail(emailPayload);
+                                publishToQueue('order-accept' , JSON.stringify({user_id,providerName}));
                                 // console.log('user_id, providerName: ', user_id, providerName);
                                 // await updateOnOrderNotificationService(user_id, providerName);
+
                             } catch (error) {
                                 console.error('Error sending email:', error);
                             }
