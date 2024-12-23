@@ -2,16 +2,16 @@ const { AddSubPRoviderService, GetSubProviderService } = require("./sub-provider
 
 module.exports = {
     AddSubProviderController: async (req, res) => {
-        const { provideId, subProoviderName, subProviderAge, subMasterId, subProviderCatId, subProviderSubCatId,sub_providerNumber } = req.body;
+        const { providerId, subProoviderName, subProviderAge, subMasterId, subProviderCatId, subProviderSubCatId,sub_providerNumber } = req.body;
         console.log(req.body);
-        if (!provideId || !subProoviderName || !subProviderAge || !subMasterId || !subProviderCatId || !subProviderSubCatId || !sub_providerNumber) {
+        if (!providerId || !subProoviderName || !subProviderAge || !subMasterId || !subProviderCatId || !subProviderSubCatId || !sub_providerNumber) {
             return res.status(400).json({ message: "Please fill all the fields" });
         }
         if (subProviderAge < 18 || subProviderAge > 55) {
             return res.status(400).json({ message: "This age group is not legal to work with us." });
         }
         try {
-            AddSubPRoviderService(provideId, subProoviderName, subProviderAge, subMasterId, subProviderCatId, subProviderSubCatId,sub_providerNumber, (err, data) => {
+            AddSubPRoviderService(providerId, subProoviderName, subProviderAge, subMasterId, subProviderCatId, subProviderSubCatId,sub_providerNumber, (err, data) => {
                 if (err) {
                     return res.status(500).json({ message: "Internal Server Error" });
                 }
@@ -23,12 +23,12 @@ module.exports = {
         }
     },
     GetSubProviderConteroller: async (req, res) => {
-        const {provideId,sub_cat_id } = req.query;
-        if (!sub_cat_id || !provideId) {
+        const {providerId,sub_cat_id } = req.query;
+        if (!sub_cat_id || !providerId) {
             return res.status(400).json({ message: "Please provide sub_cat_id" });
         }
         try {
-            GetSubProviderService(sub_cat_id,provideId, (err, data) => {
+            GetSubProviderService(sub_cat_id,providerId, (err, data) => {
                 if (err) {
                     return res.status(500).json({ message: "Internal Server Error" });
                 }
