@@ -81,7 +81,12 @@ module.exports = {
                 console.log('err: ', err);
                 res.status(500).json({ message: "Internal Server Error" })
             }
-            res.status(200).json({ result })
+            if (result.length === 0) {
+                return res.status(400).json({ message: "No Provider Detail fount" })
+            }
+            else {
+                res.status(200).json({ result })
+            }
         });
     },
     ProviderOdditServiceDetailsController: (req, res) => {
@@ -98,7 +103,7 @@ module.exports = {
             res.status(200).json({ result })
         });
     },
-   
+
     ProviderOdditEditController: async (req, res) => {
         try {
             const {
@@ -162,7 +167,7 @@ module.exports = {
                 availableTime,
                 newAvailableTime,
                 price,
-                description, 
+                description,
                 images,
                 providerImage: providerImageUrl,
                 description,
@@ -179,7 +184,7 @@ module.exports = {
             res.status(400).json({ error: error.message });
         }
     },
-    
+
     ProviderOdditFiggureController: (req, res) => {
         const { provider_id } = req.query;
         // console.log(provider_id);
@@ -195,13 +200,13 @@ module.exports = {
         });
     },
     ProviderOdditApprovalController: (req, res) => {
-        const { provider_id, user_id, AcceptanceStatus, sub_cat_id,sub_providerId,sub_providerName, sub_providerNumber } = req.body;
-        console.log(provider_id, user_id, AcceptanceStatus);
-        if(!provider_id || !user_id || !AcceptanceStatus || !sub_cat_id || !sub_providerId || !sub_providerName || !sub_providerNumber) {
+        const { Booking_id, provider_id, user_id, AcceptanceStatus, sub_cat_id, sub_providerId, sub_providerName, sub_providerNumber } = req.body;
+        console.log(provider_id, user_id, AcceptanceStatus, Booking_id);
+        if (!provider_id || !user_id || !AcceptanceStatus || !sub_cat_id || !sub_providerId || !sub_providerName || !sub_providerNumber) {
             return res.status(400).json({ message: "Please provide all the details" });
         }
         try {
-            ProviderOdditApprovalService(provider_id, user_id, AcceptanceStatus, sub_cat_id,sub_providerId,sub_providerName,sub_providerNumber, (err, result) => {
+            ProviderOdditApprovalService(Booking_id, provider_id, user_id, AcceptanceStatus, sub_cat_id, sub_providerId, sub_providerName, sub_providerNumber, (err, result) => {
                 if (err) {
                     console.log('err: ', err);
                     res.status(500).json({ message: "Internal Server Error" })
@@ -247,7 +252,7 @@ module.exports = {
             return res.status(400).json({ message: "provider id is missing:)" })
         }
         getProviderByIDService(provider_id, (err, result) => {
-            if (err) { 
+            if (err) {
                 console.log('err: ', err);
                 res.status(500).json({ message: "Internal Server Error" })
             }
